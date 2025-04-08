@@ -2,6 +2,7 @@
 import './App.css';
 import { Element } from 'react-scroll';
 import Sidebar from './components/Sidebar';
+import Home from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
@@ -10,22 +11,32 @@ export default function App() {
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
-      <main id="container" className="flex-1 overflow-y-auto scroll-smooth">
+      <main id="container" className="overflow-x-hidden scroll-smooth">
+
+        <Element name="home">
+          <section>
+            <Home />
+          </section>
+        </Element>
+
         <Element name="about">
           <section>
             <About />
           </section>
         </Element>
+
         <Element name="projects">
           <section>
             <Projects />
           </section>
         </Element>
+        
         <Element name="contact">
           <section>
             <Contact />
           </section>
         </Element>
+
       </main>
     </div>
   );
