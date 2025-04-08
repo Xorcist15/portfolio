@@ -1,27 +1,32 @@
-import './App.css';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import SidebarMenu from "./components/Sidebar";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Projects from "./pages/Projects";
-import Contact from "./pages/Contact";
-import Blog from "./pages/Blog";
 
-function App() {
+import './App.css';
+import { Element } from 'react-scroll';
+import Sidebar from './components/Sidebar';
+import About from './pages/About';
+import Projects from './pages/Projects';
+import Contact from './pages/Contact';
+
+export default function App() {
   return (
-      <div className="flex">
-        <SidebarMenu />
-        <div className="flex-1">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/blog" element={<Blog />} />
-          </Routes>
-        </div>
-      </div>
+    <div className="flex h-screen overflow-hidden">
+      <Sidebar />
+      <main id="container" className="flex-1 overflow-y-auto scroll-smooth">
+        <Element name="about">
+          <section>
+            <About />
+          </section>
+        </Element>
+        <Element name="projects">
+          <section>
+            <Projects />
+          </section>
+        </Element>
+        <Element name="contact">
+          <section>
+            <Contact />
+          </section>
+        </Element>
+      </main>
+    </div>
   );
 }
-
-export default App;

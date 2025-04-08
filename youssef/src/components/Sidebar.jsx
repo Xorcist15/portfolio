@@ -1,57 +1,86 @@
-import React, { useState } from "react";
-import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Link } from "react-router-dom";
+import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
+import { Link as ScrollLink } from 'react-scroll';
+import { useState } from 'react';
 import {
-  FaHome,
-  FaUser,
-  FaProjectDiagram,
-  FaEnvelope,
-  FaBlog,
-  FaBars,
-} from "react-icons/fa";
+  Info,
+  FolderKanban,
+  Mail,
+  ChevronsLeft,
+  ChevronsRight,
+} from 'lucide-react';
 
-const SidebarMenu = () => {
+export default function SideNav() {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <div className="h-screen flex">
-      <Sidebar
-        collapsed={collapsed}
-        backgroundColor="#1f2937" // Tailwind's gray-800
-        className="!text-white"
-      >
-        <Menu>
-          <MenuItem
-            icon={<FaBars />}
-            onClick={() => setCollapsed(!collapsed)}
-            className="!mb-4"
-          >
-            {!collapsed && "Toggle"}
-          </MenuItem>
+    <Sidebar
+      collapsed={collapsed}
+      className="h-screen bg-gray-800 text-white border-r border-gray-700"
+      rootStyles={{ color: 'white' }}
+    >
+      <Menu menuItemStyles={{
+        button: {
+          className: 'hover:bg-gray-700 transition-all',
+        },
+        label: {
+          className: 'ml-2',
+        },
+        icon: {
+          className: 'text-white',
+        },
+      }}>
+        <MenuItem
+          onClick={() => setCollapsed(!collapsed)}
+          icon={collapsed ? <ChevronsRight /> : <ChevronsLeft />}
+        >
+          {!collapsed && 'Collapse'}
+        </MenuItem>
 
-          <MenuItem icon={<FaHome />} component={<Link to="/" />}>
-            Home
-          </MenuItem>
-          <MenuItem icon={<FaUser />} component={<Link to="/about" />}>
-            About
-          </MenuItem>
-          <MenuItem icon={<FaProjectDiagram />} component={<Link to="/projects" />}>
-            Projects
-          </MenuItem>
-          <MenuItem icon={<FaEnvelope />} component={<Link to="/contact" />}>
-            Contact
-          </MenuItem>
-          <MenuItem icon={<FaBlog />} component={<Link to="/blog" />}>
-            Blog
-          </MenuItem>
-        </Menu>
-      </Sidebar>
+        <MenuItem
+          icon={<Info size={18} />}
+          component={
+            <ScrollLink
+              to="about"
+              smooth
+              duration={500}
+              containerId="container"
+              className="block w-full h-full cursor-pointer"
+            />
+          }
+        >
+          About
+        </MenuItem>
 
-      <div className="flex-1 p-4 overflow-auto">
-        {/* Page content will be rendered here */}
-      </div>
-    </div>
+        <MenuItem
+          icon={<FolderKanban size={18} />}
+          component={
+            <ScrollLink
+              to="projects"
+              smooth
+              duration={500}
+              containerId="container"
+              className="block w-full h-full cursor-pointer"
+            />
+          }
+        >
+          Projects
+        </MenuItem>
+
+        <MenuItem
+          icon={<Mail size={18} />}
+          component={
+            <ScrollLink
+              to="contact"
+              smooth
+              duration={500}
+              containerId="container"
+              className="block w-full h-full cursor-pointer"
+            />
+          }
+        >
+          Contact
+        </MenuItem>
+      </Menu>
+    </Sidebar>
   );
-};
-
-export default SidebarMenu;
+}
