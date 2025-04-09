@@ -13,25 +13,25 @@ export default function App() {
       <Sidebar />
       <main id="container" className="overflow-x-hidden scroll-smooth">
 
-        <Element name="home">
+        <Element id="home" name="home" className="section">
           <section>
             <Home />
           </section>
         </Element>
 
-        <Element name="about">
+        <Element id="about" name="about" className="section">
           <section>
             <About />
           </section>
         </Element>
 
-        <Element name="projects">
+        <Element id="projects" name="projects" className="section">
           <section>
             <Projects />
           </section>
         </Element>
         
-        <Element name="contact">
+        <Element id="contact" name="contact" className="section">
           <section>
             <Contact />
           </section>

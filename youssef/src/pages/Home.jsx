@@ -20,14 +20,19 @@ const Home = () => {
       />
     </div>
 
-    <div className="absolute w-full h-screen top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  pointer-events-none flex items-center">
+    <div className="absolute w-full h-screen top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  pointer-events-none flex justify-center items-center">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 3 }} >
-        <div className="h-2/4 flex flex-col items-center justify-center space-y-20">
+        <div className="h-2/4 flex flex-col items-center space-y-20">
+
           <div className="w-auto text-center">
-            <FuzzyText baseIntensity={1}>404 Not Found</FuzzyText>
+            <FuzzyText baseIntensity={1.8}>404 Not Found</FuzzyText>
+          </div>
+
+          <div className="w-auto text-center">
+            <FuzzyText baseIntensity={0.5}>Youssef</FuzzyText>
           </div>
 
           <div className="w-auto text-center">
