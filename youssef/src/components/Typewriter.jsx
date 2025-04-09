@@ -5,7 +5,7 @@ const TypewriterIntro = () => {
   return (
     <h1 className="text-3xl md:text-5xl font-bold text-center text-white">
       I'm a{' '}
-      <span className="text-red-500">
+      <span className="text-red-600">
         <Typewriter
           words={[
             'Fullstack Developer',
