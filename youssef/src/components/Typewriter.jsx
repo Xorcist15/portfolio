@@ -13,7 +13,7 @@ const TypewriterIntro = () => {
             'Vim User',
             'Game Dev Enjoyer',
             'Low-Level Explorer',
-            'Assembly Learner',
+            'x86_64 Learner',
             'Socket Tester',
             'Cybersecurity Curious',
             'React Addict',

@@ -4,6 +4,7 @@ import { Element } from 'react-scroll';
 import Sidebar from './components/Sidebar';
 import Home from './pages/Home';
 import About from './pages/About';
+import Skills from './components/Skills';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 
@@ -19,6 +20,10 @@ export default function App() {
 
         <Element id="about" name="about" className="section">
           <section> <About /> </section>
+        </Element>
+
+        <Element id="skills" name="skills" className="section">
+          <section> <Skills /> </section>
         </Element>
 
         <Element id="projects" name="projects" className="section">

@@ -108,6 +108,22 @@ export default function SideNav() {
         </MenuItem>
 
         <MenuItem
+          active={activeItem === 'skills'}
+          icon={<Info size={18} />}
+          component={
+            <ScrollLink
+              to="skills"
+              smooth
+              duration={1000}
+              containerId="container"
+              className="block w-full h-full cursor-pointer"
+            />
+          }
+        >
+          Skills
+        </MenuItem>
+
+        <MenuItem
           active={activeItem === 'projects'}
           icon={<FolderKanban size={18} />}
           component={
