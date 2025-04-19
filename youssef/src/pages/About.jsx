@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import AboutCard from '../components/AboutCard';
 import PixelTrail from '../effects/PixelTrail';
+import Flag from 'react-world-flags';
 
 export default function About() {
   const [lang, setLang] = useState('en');
@@ -24,7 +25,6 @@ export default function About() {
         />
       </div>
 
-
       <div className="absolute top-0 left-0 w-full h-screen pointer-events-none flex flex-col justify-center">
 
         {/* Fixed button at the top center */}
@@ -33,7 +33,19 @@ export default function About() {
             onClick={() => setLang(lang === 'en' ? 'fr' : 'en')}
             className="bg-red-800 hover:bg-red-700 text-white font-semibold py-2 px-5 rounded-full shadow-lg flex items-center gap-2 transition-colors"
           >
-            {lang === 'en' ? '🇫🇷 Français' : '🇬🇧 English'}
+            <span className="flex items-center gap-2">
+              {lang === 'en' ? (
+                <>
+                  <Flag code="FR" style={{ width: '24px', height: '16px' }} />
+                  Français
+                </>
+              ) : (
+                <>
+                  <Flag code="US" style={{ width: '24px', height: '16px' }} />
+                  English
+                </>
+              )}
+            </span>
           </button>
         </div>
 

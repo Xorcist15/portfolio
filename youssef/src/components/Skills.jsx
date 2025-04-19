@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useRef, useEffect } from 'react';
+import PixelTrail from '../effects/PixelTrail';
 
 const skills = [
   { name: 'Python', icon: '🐍', level: 80 },
-  { name: 'Java', icon: '☕', level: 75 },
+  { name: 'Java', icon: '🍵' , level: 75 },
   { name: 'C#', icon: '🎯', level: 60 },
   { name: 'JavaScript', icon: '📜', level: 90 },
   { name: 'TypeScript', icon: '🔷', level: 75 },
@@ -24,6 +25,8 @@ const skills = [
   { name: 'Shell', icon: '💻', level: 60 },
   { name: 'PowerShell', icon: '⚡', level: 60 },
   { name: 'Docker', icon: '🐳', level: 50 },
+  { name: 'Wordpress', icon: '🅦', level: 90},
+  { name: 'dolibarr', icon: '📊', level: 40},
   { name: 'MongoDB', icon: '🍃', level: 60 },
   { name: 'WebSockets', icon: '🔌', level: 50 },
   { name: 'REST APIs', icon: '🔗', level: 75 },
@@ -31,85 +34,76 @@ const skills = [
 ];
 
 const Skills = () => {
-  const scrollRef = useRef(null);
-  const [animatedLevels, setAnimatedLevels] = useState(skills.map(() => 0));
-  
-  // Animate skill bars on scroll position
+  const containerRef = useRef(null);
+
   useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
+    const container = containerRef.current;
+    let animationFrame;
+    let targetScroll = 0;
 
-    const updateAnimatedLevels = () => {
-      const scrollPosition = el.scrollLeft;  // Current scroll position
-      const scrollWidth = el.scrollWidth;    // Full width of the scrollable container
-
-      const percentageScrolled = (scrollPosition / scrollWidth) * 100;
-
-      const newLevels = skills.map((s) => {
-        const progress = (percentageScrolled / 100) * s.level;
-        return Math.min(Math.round(progress), s.level); // Update to the current scroll position
-      });
-
-      setAnimatedLevels(newLevels);
+    const handleMouseMove = (e) => {
+      const { left, width } = container.getBoundingClientRect();
+      const x = e.clientX - left;
+      const percent = x / width;
+      const maxScroll = container.scrollWidth - container.clientWidth;
+      targetScroll = maxScroll * percent;
     };
 
-    // Initial scroll and animation
-    updateAnimatedLevels();
+    const animateScroll = () => {
+      container.scrollLeft += (targetScroll - container.scrollLeft) * 0.1;
+      animationFrame = requestAnimationFrame(animateScroll);
+    };
 
-    // Listen for scroll event
-    el.addEventListener('scroll', updateAnimatedLevels);
+    container.addEventListener('mousemove', handleMouseMove);
+    animateScroll();
 
     return () => {
-      el.removeEventListener('scroll', updateAnimatedLevels);
+      container.removeEventListener('mousemove', handleMouseMove);
+      cancelAnimationFrame(animationFrame);
     };
-  }, []);
-
-  // Auto-scroll horizontally
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-
-    let animationId;
-    const speed = 0.5;
-
-    const scroll = () => {
-      el.scrollLeft += speed;
-      if (el.scrollLeft >= el.scrollWidth / 2) el.scrollLeft = 0;
-      requestAnimationFrame(scroll);
-    };
-
-    animationId = requestAnimationFrame(scroll);
-    return () => cancelAnimationFrame(animationId);
   }, []);
 
   return (
-    <div className="h-screen w-full bg-gray-900 text-white flex flex-col items-center justify-center px-4 overflow-hidden">
-      <p className="text-lg mb-4 text-center max-w-2xl">
-        These are the technologies and programming languages I’ve worked with during my studies and personal projects.
-      </p>
+    <div className="relative w-full h-screen bg-black">
 
-      <div
-        ref={scrollRef}
-        className="flex overflow-x-scroll scrollbar-hide whitespace-nowrap w-full max-w-full scroll-hide"
-      >
-        {[...skills, ...skills].map((skill, i) => (
-          <div
-            key={i}
-            className="flex-shrink-0 bg-gray-800 rounded-2xl p-6 m-2 w-48 text-center hover:bg-red-600 transition duration-300 shadow-md"
-          >
-            <div className="text-4xl mb-2">{skill.icon}</div>
-            <h3 className="text-xl font-semibold mb-2">{skill.name}</h3>
-            <div className="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
-              <div
-                className="bg-red-500 h-3 rounded-full transition-all duration-700 ease-out"
-                style={{ width: `${animatedLevels[i % skills.length]}%` }}
-              ></div>
+      {/* background */}
+      <div className="absolute inset-0 overflow-hidden z-0">
+        <PixelTrail
+          gridSize={20}
+          trailSize={0.1}
+          maxAge={600}
+          interpolate={5}
+          color="#ef4444"
+          gooeyFilter={{ id: "custom-goo-filter", strength: 6 }}
+        />
+      </div>
+
+      <div className="relative z-10 w-full h-full flex flex-col items-center justify-center pointer-events-none">
+        <h2 className="text-white text-3xl font-bold mb-8">My Skillset</h2>
+
+        <div
+          ref={containerRef}
+          className="w-11/12 max-w-6xl h-[400px] flex items-center space-x-6 overflow-x-auto p-6 border border-red-700 rounded-xl bg-[#0d0d0d]/80 scroll-hide shadow-lg pointer-events-auto"
+        >
+          {skills.map((skill, index) => (
+            <div
+              key={index}
+              className="w-[200px] flex-shrink-0 flex flex-col items-center justify-between p-4 border border-red-600 rounded-lg shadow-md bg-[#111] transition transform hover:scale-105 hover:shadow-red-600"
+            >
+              <div className="icon mb-4 text-3xl text-red-500">{skill.icon}</div>
+              <div className="name text-base font-semibold mb-3 text-center text-white">{skill.name}</div>
+
+              <div className="w-full h-2 bg-red-900 rounded-full mb-3">
+                <div
+                  className="h-full rounded-full bg-red-500"
+                  style={{ width: `${skill.level}%` }}
+                ></div>
+              </div>
+
+              <div className="level text-xs text-gray-300">Level: {skill.level}%</div>
             </div>
-            <span className="mt-1 text-sm text-gray-300">
-              {animatedLevels[i % skills.length]}%
-            </span>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

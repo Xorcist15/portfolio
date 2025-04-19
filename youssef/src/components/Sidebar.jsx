@@ -9,6 +9,7 @@ import {
   Mail,
   ChevronsLeft,
   ChevronsRight,
+  BarChart2,
 } from 'lucide-react';
 
 export default function SideNav() {
@@ -109,7 +110,7 @@ export default function SideNav() {
 
         <MenuItem
           active={activeItem === 'skills'}
-          icon={<Info size={18} />}
+          icon={<BarChart2 size={18} />}
           component={
             <ScrollLink
               to="skills"
